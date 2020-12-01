@@ -1,6 +1,6 @@
 <%--
 	Apache-2.0 shaka-player.compiled.js 사용
- 	shakaPlayer(MPEG-DASH)로 영상을 재생하는 page	
+ 	shakaPlayer(MPEG-DASH)로 영상을 재생하는 page
  	1. shaka-player.compiled.js 다운로드 경로 -- https://cdnjs.cloudflare.com/ajax/libs/shaka-player/2.4.1/shaka-player.compiled.js
  	2. 크롬, IE11지원  // IE10 이하로는 안된다고 함
  	3. IE Promise 지원을 위한 bluebird.min.js
