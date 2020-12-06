@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 /*
- * 3-1 거스름돈 최소 갯수
+ * 거스름돈 최소 갯수, 86page
  */
 class greedy {
 	final int[] coin = {500, 100, 50, 10};
