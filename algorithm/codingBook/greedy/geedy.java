@@ -5,14 +5,14 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 /*
- * 거스름돈 최소 갯수, 86page
+ * 3-1 거스름돈 최소 갯수
  */
-class greedy {
+class calculate {
 	final int[] coin = {500, 100, 50, 10};
 	int money;
 	int cnt = 0;
 	HashMap<Integer, Integer> result = new HashMap<Integer, Integer>();
-	greedy(int money) {
+	calculate(int money) {
 		this.money = money;
 	}
 	
@@ -41,10 +41,10 @@ class greedy {
 	}
 	
 }
-public class calculate {
+public class greedy {
 	public static void main(String[] args) {
-		greedy greedy = new greedy(1500);
-		System.out.println(greedy.calculation());
+		calculate calculate = new calculate(1500);
+		System.out.println(calculate.calculation());
 	}
 }
 
