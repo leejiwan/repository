@@ -4,7 +4,7 @@ package sample;
  * @author lee
  * Arrays.sort를 사용하지 않은 오름차순
  */
-public class AscetSort { 		
+public class AsceSort { 		
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

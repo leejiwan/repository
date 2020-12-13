@@ -4,7 +4,7 @@ package sample;
  * @author lee
  * 내림차순
  */
-public class DescOrder {
+public class DescSort {
 	public static void main(String[] args) {
 		final int[] array = {3,15,27,12};
 		int temp = 0;
