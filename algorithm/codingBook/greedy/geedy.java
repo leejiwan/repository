@@ -41,7 +41,7 @@ class calculate {
 	}
 	
 }
-public class greedy {
+public class Greedy {
 	public static void main(String[] args) {
 		calculate calculate = new calculate(1500);
 		System.out.println(calculate.calculation());

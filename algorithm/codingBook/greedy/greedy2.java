@@ -45,7 +45,7 @@ class calculate2 {
 	}
 }
 
-public class greedy2 {
+public class Greedy2 {
 	public static void main(String[] args) {
 		int[][] array = {{7,3,1,8},{3,3,3,4}};
 		calculate2 calculate2 = new calculate2(array);
