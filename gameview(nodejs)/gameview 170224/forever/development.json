@@ -1,0 +1,8 @@
+
+{
+  "uid": "sample-dev",
+  "append": true,
+  "watch": true,
+  "script": "./bin/www",
+  "sourceDir": "/home/ubuntu/production/gameview"
+}

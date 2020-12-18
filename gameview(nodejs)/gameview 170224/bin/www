@@ -1,0 +1,121 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+//경로에서는 확장자를 생략하고 쓴다.
+var app = require('../app'); //상위 폴더에 있는 app.js 모듈을 로딩한다.require은 모듈 이름, 모듈 경로를 인자로 갖는다.
+var debug = require('debug')('mysite:httpServer'); //debug 모듈은 함수이다. 태그(프로젝트 이름:토큰)를 넣었다. server를 넣으면 로깅을 해준다.
+var http = require('http'); //http를 지원하겠다.
+var https = require('https'); //https를 지원하겠다.
+//모듈이 갖고 있는 createServer를 이용해 서버를 만든다.=>두 개의 서버를 만들어야 한다.
+//http 요청이 들어오면 http 서버가 응답하고, https 요청이 들어오면 https 서버가 응답한다.
+//app이라는 모듈에서는 들어온 요청이 http인지 https인지를 검사하는 미들웨어가 필요하다.
+//https인데 http로 오면 426 상태 코드를 준다.
+//브라우저가 426을 받으면 똑같은 url을 http에서 https로 바꿔서 다시 요청한다.
+var fs = require('fs'); //파일 시스템 모듈
+var path = require('path'); //경로를 조작할 때 쓰는 모듈
+
+/**
+ * Get httpport from environment and store in Express.
+ */
+
+var httpPort = normalizePort(process.env.HTTP_PORT || '80'); //PORT라는 환경변수가 없으면 '3000'이 된다.
+app.set('httpPort', httpPort); //app 객체에 port라는 새로운 프로퍼티와 값을 추가(set함수)
+var httpsPort = normalizePort(process.env.HTTPS_PORT || '443'); //PORT라는 환경변수가 없으면 '443'이 된다.
+app.set('httpsPort', httpsPort); //app 객체에 port라는 새로운 프로퍼티와 값을 추가(set함수)
+
+/**
+ * Create HTTP httpServer and HTTPS httpsServer.
+ */
+
+//이 때의 __dirname은 bin을 가리킨다.
+var certPath = path.join(__dirname, '../cert_key/mysite.cert.pem');  //cert key path 지정, join의 아규먼트를 모아 패스를 만든다.
+var keyPath = path.join(__dirname, '../cert_key/mysite_key.pem');
+
+//certPath에 key와 cert를 만들어서 저장한다.
+var opts = {
+  key: fs.readFileSync(keyPath), //private key
+  cert: fs.readFileSync(certPath) //public key 서버의 인증서->브라우저에게 확인하라고
+};
+
+var httpServer = http.createServer(app); //http 요청이 있을 때마다 실행되는 함수이다.
+var httpsServer = https.createServer(opts, app);
+
+/**
+ * Listen on provided httpport, on all network interfaces.
+ */
+//에러가 아니면 listening
+httpServer.listen(httpPort);
+httpServer.on('error', onError);
+httpServer.on('listening', onListening);
+
+httpsServer.listen(httpsPort);
+httpsServer.on('error', onError);
+httpsServer.on('listening', onListening);
+
+/**
+ * Normalize a httpPort and httpsPort into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10); //십진수 정수로 변환
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // httpport number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP httpServer "error" event.
+ */
+//에러가 발생하면 에러처리->http에서 발생한건지 https에서 발생한건지
+function onError(error) {
+
+  var port = (this === httpServer ? httpPort : httpsPort);
+
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  //윈도우즈에서는 발생하지 않는 오류(1023 번호 밑의 포트는 루트 권한으로 사용해야 한다.)
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE': //이미 포트가 사용중인 경우(프로세스가 죽지 않았을 때)
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP httpServer "listening" event.
+ */
+
+function onListening() {
+  var server = (this === httpServer ? httpServer : httpsServer);
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'httpPort ' + addr.port;
+  debug('Listening on ' + bind);
+}

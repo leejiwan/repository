@@ -1,0 +1,64 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="bin\www" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" path-to-node="C:/Program Files/didimdol/node" path-to-js-file="bin/www" working-dir="$PROJECT_DIR$">
+    <envs pass-parent-envs="false">
+      <env name="DEBUG" value="*" />
+      <env name="PORT" value="8080" />
+      <env name="HTTP_PORT" value="80" />
+      <env name="HTTPS_PORT" value="443" />
+      <env name="SECRET_KEY" value="2449d10c-a055-4d93-885c-d89c89a85fd2" />
+      <env name="AES_KEY" value="5345abed-335d-4b48-bcd4-18107cf7919a" />
+      <env name="gameView_PORT" value="3306" />
+      <env name="gameView_USER" value="boombuy" />
+      <env name="gameView_HOST" value="boombuy.clxzveedeth5.ap-northeast-2.rds.amazonaws.com" />
+      <env name="gameView_NAME" value="mysite" />
+      <env name="gameView_PASSWORD" value="zxasqw12" />
+      <env name="gameView_CONNECTION_LIMIT" value="5" />
+      <env name="gameView_DEBUG" value="true" />
+      <env name="DB_HOST" value="localhost" />
+      <env name="DB_USER" value="root" />
+      <env name="DB_NAME" value="mysite" />
+      <env name="DB_PASSWORD" value="1234" />
+      <env name="DB_PORT" value="3306" />
+      <env name="DB_CONNECTION_LIMIT" value="5" />
+      <env name="DB_DEBUG" value="true" />
+      <env name="S3_ACCESS_KEY" value="AKIAJZ7YH7QMKKH7UAQQ'" />
+      <env name="S3_SECRET_ACCESS_KEY" value="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" />
+      <env name="S3_REGION" value="ap-northeast-2" />
+      <env name="SES_ACCESS_KEY" value="AKIAJBDR2YDBDVY52A6Q" />
+      <env name="SES_SECRET_ACCESS_KEY" value="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" />
+      <env name="SES_REGION" value="us-west-2" />
+      <env name="FACEBOOK_APP_ID" value="378194532544040" />
+      <env name="FACEBOOK_APP_SECRET_CODE" value="982a6da34ebdde8a060b80f86d0da3c3" />
+    </envs>
+    <browser url="http://localhost:3000/" />
+    <profiling v8-profiler-path="" />
+    <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+      <option name="envVars">
+        <list />
+      </option>
+      <option name="extraHosts">
+        <list />
+      </option>
+      <option name="links">
+        <list />
+      </option>
+      <option name="networkDisabled" value="false" />
+      <option name="networkMode" value="bridge" />
+      <option name="portBindings">
+        <list />
+      </option>
+      <option name="publishAllPorts" value="false" />
+      <option name="version" value="1" />
+      <option name="volumeBindings">
+        <list />
+      </option>
+    </EXTENSION>
+    <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSProfilingRunConfigurationExtension">
+      <profiling v8-profiler-path="" />
+    </EXTENSION>
+    <EXTENSION ID="com.jetbrains.nodejs.run.NodeJSStartBrowserRunConfigurationExtension">
+      <browser url="http://localhost:3000/" />
+    </EXTENSION>
+    <method />
+  </configuration>
+</component>
