@@ -1,4 +1,4 @@
-import React from 'react'; //리엑트를 불러와서 사용
+import React, { Component } from 'react'; //리엑트를 불러와서 사용
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';

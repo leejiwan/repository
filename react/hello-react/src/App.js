@@ -1,26 +1,20 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  console.log('start')
+  const name = 'Lee';
+  const style = {backgroundColor:'black', color:'aqua',fontSize:'48px',fontWeight:'bold'};
+  const className = 'react'
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={className} style={style}>
+      {name === "Lee2" ? (
+        <h1>{name} 리액트 TEST</h1>
+      ) : (
+        <h1>{name} 리액트 TEST2</h1>
+      )}
     </div>
   );
 }
+
 
 export default App;
