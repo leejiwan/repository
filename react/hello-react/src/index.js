@@ -4,13 +4,12 @@ import './index.css';
 //import App from './App';
 import reportWebVitals from './reportWebVitals';
 import MyComponent from './MyComponent';
-import MyComponentClass from './MyComponentClass';
+import Event from './EventHandle';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <MyComponent name="LeeComponent" children="help"/>
-    <MyComponentClass></MyComponentClass>
+    <Event name="LeeJiwan"/>
   </React.StrictMode>,
   document.getElementById('root')
 );
