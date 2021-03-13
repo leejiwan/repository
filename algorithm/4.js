@@ -1,24 +1,11 @@
-//N개의 최소 공배수
+//최댓값과 최솟값
 function solution(n) {
-    var answer = n[0];
-    for(var i=1; i<n.length; i++) {
-        answer = lcm(answer, n[i]);
-    }
+    var answer;
+    var nArray = n.split(' ');
+    var max = Math.max.apply(null, nArray);
+    var min = Math.min.apply(null, nArray);
+    answer = min.toString().concat(' ', max.toString());
     return answer;
 }
-//최대공약수
-function gcd(a, b) {
-    var temp;
-    while(b > 0) {
-        temp = a%b;
-        a = b;
-        b = temp;
-    }
-    return a; //최대공약수
-};
-//최소공배수
-function lcm(a,b) {
-    return (a*b)/gcd(a,b);
-}
-var test = [2,6,8,14];
+var test = '1 2 3 4';
 solution(test);
