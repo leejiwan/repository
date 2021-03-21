@@ -1,20 +1,29 @@
 //구명보트
-function solution(n) {
-    var answer;
-    var sortArray = n.sort(function(a, b)  {
+function solution(people, limit) {
+    var answer = 0;
+    var sortArray = people.sort(function(a, b)  {
         return b - a;
       });
     var lastIndex = sortArray.length;
     var index = 0;
-    while(index != lastIndex) {
-        if(n[index] + n[lastIndex] > 100) {
+      // 80, 70, 50, 50 
+      //70, 80, 50
+    while(index <= lastIndex) {
+        if(people[index] + people[lastIndex] > limit) {
             index++;
         }else {
-
+            index++;
+            lastIndex--;
         }
+        console.log('--------');
+        console.log('index:' + index);
+        console.log('lastIndex::' + lastIndex);
+
         answer++;
     }
-
+    console.log('answer::' + answer);
+    return answer;
 }
-var input = [80, 70, 50, 50];
-solution(input);
+var input = [70, 80, 50];
+var limit = 100;
+solution(input, limit);
