@@ -29,7 +29,6 @@ function solution(progresses, speeds) {
 
   }
   return answer;
-
 }
 //var progresses = [93, 30, 55]; var speeds = [1, 30, 5];;	//[7,3,9] [2, 1]
 var progresses = [95, 90, 99, 99, 80, 99];	var speeds = [1, 1, 1, 1, 1, 1];	//   [1, 3, 2]
