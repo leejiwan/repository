@@ -1,11 +1,10 @@
 function solution(n) {
   var answer = 0;
   if(fibo(n) < 1234567) {
-    answer = 
+    answer = fibo(n)
   }else {
     answer = fibo(n)%1234567;
   }
-
   return answer;
 }
 function fibo(n) {
@@ -14,5 +13,3 @@ function fibo(n) {
   }else {
     return fibo(n-2) + fibo(n-1);
   }
-}
-solution(5);
