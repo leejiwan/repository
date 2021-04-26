@@ -1,3 +1,4 @@
+//2021 카카오 인턴 1차 120분, 알고리즘 1문제
 function solution(n, m) {
   var x = n; //가로
   var y = m; //세로
