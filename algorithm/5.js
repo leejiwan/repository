@@ -15,13 +15,8 @@ function solution(people, limit) {
             index++;
             lastIndex--;
         }
-        console.log('--------');
-        console.log('index:' + index);
-        console.log('lastIndex::' + lastIndex);
-
         answer++;
     }
-    console.log('answer::' + answer);
     return answer;
 }
 var input = [70, 80, 50];

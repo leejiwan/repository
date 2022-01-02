@@ -1,18 +1,20 @@
-function solution(n) {
+function solution(numbers) {
   var answer = 0;
-  if(fibo(n) < 1234567) {
-    answer = 
-  }else {
-    answer = fibo(n)%1234567;
-  }
 
-  return answer;
-}
-function fibo(n) {
-  if(n <= 1) {
-    return n;
-  }else {
-    return fibo(n-2) + fibo(n-1);
+  var t = numbers.map(function(a) {
+    return a.toString();
+  })
+
+  //아 sort는 모르겠다.. 진짜
+  var c = t.sort(function(a,b) {
+    return (b+a) - (a+b);
+  }) 
+
+  var result = c.join('').toString();
+  if(result.charAt(0) == '0') {
+    result = '0';
   }
+  return result;
 }
-solution(5);
+var numbers = [0, 0, 0];
+solution(numbers);
