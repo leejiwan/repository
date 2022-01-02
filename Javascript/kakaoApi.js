@@ -8,7 +8,7 @@ function loadDoc() {
   $.ajax({
     method: "GET",
     url: "https://dapi.kakao.com/v2/search/image?",
-    data: { "query" : "태연" },
+    data: { "query" : "가스공사" },
     headers : {Authorization: "KakaoAK " + kakaoAuth}
   }).done(function (msg) {
     alert("Data Saved: " + msg);
