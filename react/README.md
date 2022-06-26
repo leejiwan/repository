@@ -20,3 +20,13 @@
 1. component 작성
 
 2. 화살표 문법 function 사용 대신 () => {}
+
+**2022.06.26**
+
+- 리엑트 특징2
+
+1. SPA(single Page Application)
+
+2. component로 html 재사용편리
+
+3. 데이터가 html에 자동 반영됨
