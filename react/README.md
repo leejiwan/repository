@@ -30,3 +30,18 @@
 2. component로 html 재사용편리
 
 3. 데이터가 html에 자동 반영됨
+
+4. npx create-react-app blog
+
+5. node_modules폴더 : 라이브러리 코드 보관함
+
+6. public 폴더 : static 파일 모아놓는 곳 (이미지)
+
+7. src : 코드 짜는 곳
+
+8. app.js에 html이 먹는 이유
+<div> -> index.
+
+9. package.json : 프로젝트 정보
+
+   10.youtube.com/watch?v=GOiCobCh2Ig
