@@ -22,7 +22,8 @@ function App() {
   //변수가 변경이 되면 html에 자동으로 변경이 안됨
   //state쓰던 html은 자동 재렌더링이 됨
   let [글제목, b] = useState(['짬뽕','짜장면','탕수육']); //[?,?] 이런구조 ['남자 코트 추천', 함수]
-
+  //state 변경 html 재렌더링
+  let [좋아요, update] = useState(0);
   
   return (
     <div className="App">
@@ -31,19 +32,19 @@ function App() {
       </div>
       <h4 style={{color : 'red'}}>{title}</h4>
       <div className="list">
-        <h4>{글제목[0]}<span>좋아요 👍 </span> 0 </h4>
+        <h4>{글제목[0]}<span onClick={()=> update(좋아요+1)}> 👍 </span> {좋아요} </h4>
         <p>1월 1일</p>
       </div>
       <div className="list">
-        <h4>{글제목[1]}</h4>
+        <h4>{글제목[1]}<span onClick={()=> update(좋아요+1)}> 👍 </span> {좋아요} </h4>
         <p>2월 1일</p>
       </div>
       <div className="list">
-        <h4>{글제목[2]}</h4>
+        <h4>{글제목[2]}<span onClick={()=> update(좋아요+1)}> 👍 </span> {좋아요} </h4>
         <p>3월 1일</p>
       </div>
     </div>
-  );
+  ); 
 }
 
 export default App;
