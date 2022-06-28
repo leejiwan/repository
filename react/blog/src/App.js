@@ -24,6 +24,7 @@ function App() {
   let [글제목, doUpdate] = useState(['나시고랭짬뽕','탕수육','고추짜장면']); //[?,?] 이런구조 ['남자 코트 추천', 함수]
   //state 변경 html 재렌더링
   let [좋아요, update] = useState(0);
+  let [modal, setStatus] = useState(false);
   
   return (
     <div className="App">
@@ -54,21 +55,35 @@ function App() {
         <p>2월 1일</p>
       </div>
       <div className="list">
-        <h4>{글제목[2]}<span onClick={()=> update(좋아요+1)}> 👍 </span> {좋아요} </h4>
+        <h4 onClick={function() {
+          let temp = modal;
+          console.log(temp)
+          if(modal) {
+            temp = false;
+          }else {
+            temp = true;
+          }
+          console.log(temp)
+          setStatus(temp);
+        }}>{글제목[2]}<span onClick={()=> update(좋아요+1)}> 👍 </span> {좋아요} </h4>
         <p>3월 1일</p>
       </div>
 
-      <Modal></Modal>
+      {
+        modal == true ? <Modal></Modal> : ''
+      }
+
 
     </div>
   ); 
 }
 
-//component : 
+//component : 반복적인 html 축약시  // 큰 페이지들 // 자주변경되는 것들
 //1. function 만들고
 //2. return 안에 html
 //3. <함수명><함수명/> 사용가능
 //의미없는 <div></div> -> <></> 사용가능
+//const Modal = () => {}
 function Modal() {
   return(
     <div className="modal">
