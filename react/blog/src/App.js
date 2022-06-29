@@ -23,9 +23,9 @@ function App() {
   //state쓰던 html은 자동 재렌더링이 됨
   let [글제목, doUpdate] = useState(['나시고랭짬뽕','탕수육','고추짜장면']); //[?,?] 이런구조 ['남자 코트 추천', 함수]
   //state 변경 html 재렌더링
-  let [좋아요, update] = useState(0);
+  let [좋아요, update] = useState([0,0,0]);
   let [modal, setStatus] = useState(false);
-  
+
   return (
     <div className="App">
       <div className="black-nav">
@@ -46,7 +46,7 @@ function App() {
 
 
       <h4 style={{color : 'red'}}>{title}</h4>
-      <div className="list">
+      {/* <div className="list">
         <h4>{글제목[0]}<span onClick={()=> update(좋아요+1)}> 👍 </span> {좋아요} </h4>
         <p>1월 1일</p>
       </div>
@@ -57,19 +57,45 @@ function App() {
       <div className="list">
         <h4 onClick={function() {
           let temp = modal;
-          console.log(temp)
           if(modal) {
             temp = false;
           }else {
             temp = true;
           }
-          console.log(temp)
           setStatus(temp);
         }}>{글제목[2]}<span onClick={()=> update(좋아요+1)}> 👍 </span> {좋아요} </h4>
         <p>3월 1일</p>
-      </div>
+      </div> */}
 
       {
+        글제목.map((title, index)=>{
+          //JSX 반복분 map 사용
+          return (
+          <div className="list" key={index}> 
+            <h4 onClick={()=>{
+                if(index == 1) {
+                  let temp = modal;
+                  if(modal) {
+                    temp = false;
+                  }else {
+                    temp = true;
+                  }
+                  setStatus(temp);
+                }
+            }}>{title}<span onClick={()=> {
+              let temp = [...좋아요]; //array 사본
+              temp[index] = temp[index] + 1
+              update(temp);
+            }}> 👍 </span> {좋아요[index]} </h4>
+            <p>1월 1일</p>
+           </div>
+          )      
+
+        })
+      } 
+
+      {
+        //if안됨... 삼항연산자 사용
         modal == true ? <Modal></Modal> : ''
       }
 
