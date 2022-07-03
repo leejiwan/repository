@@ -24,7 +24,8 @@ function App() {
   let [글제목, doUpdate] = useState(['나시고랭짬뽕','탕수육','고추짜장면']); //[?,?] 이런구조 ['남자 코트 추천', 함수]
   //state 변경 html 재렌더링
   let [좋아요, update] = useState([0,0,0]);
-  let [modal, setStatus] = useState(false);
+  let [modal, setStatus] = useState(false);  
+  let [index, indexStatus] = useState(0);
 
   return (
     <div className="App">
@@ -73,15 +74,16 @@ function App() {
           return (
           <div className="list" key={index}> 
             <h4 onClick={()=>{
-                if(index == 1) {
-                  let temp = modal;
-                  if(modal) {
-                    temp = false;
-                  }else {
-                    temp = true;
-                  }
-                  setStatus(temp);
-                }
+  
+            let temp = modal;
+            if(modal) {
+              temp = false;
+            }else {
+              temp = true;
+            }
+            setStatus(temp);
+            indexStatus(index);
+                
             }}>{title}<span onClick={()=> {
               let temp = [...좋아요]; //array 사본
               temp[index] = temp[index] + 1
@@ -96,7 +98,7 @@ function App() {
 
       {
         //if안됨... 삼항연산자 사용
-        modal == true ? <Modal></Modal> : ''
+        modal == true ? <Modal index = {index} title={글제목} callback={doUpdate}></Modal> : ''
       }
 
 
@@ -110,14 +112,21 @@ function App() {
 //3. <함수명><함수명/> 사용가능
 //의미없는 <div></div> -> <></> 사용가능
 //const Modal = () => {}
-function Modal() {
+//부모 -> 자식 props 자식 -> 부모 불가능
+function Modal(props) {
+  console.log(props)
   return(
-    <div className="modal">
-      <h4>제목</h4>
+    <div className="modal" style={{'background' : 'skyblue'}}>
+      <h4>{props.title[props.index]}</h4>
       <p>날짜</p>
       <p>상세제목</p>
+      <button onClick={() => {
+       // let temp = [...props.title];
+      //  props.callback(props.title[index]);
+      }}>글수정</button>
     </div>
   );
 };
+  
 
 export default App;
