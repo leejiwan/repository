@@ -1,7 +1,7 @@
 /* eslint-disable */
 import logo from './logo.svg';
 import './App.css'; //css파일 쓰려면 상단에 경로 import 'css파일 경로'
-import {useState} from 'react';
+import React, {useState} from 'react';
 
 //실은 html이 아니라 JSX
 //react에서 div 만드는 법 React.createElement('div',null, 'Hi')
@@ -26,6 +26,8 @@ function App() {
   let [좋아요, update] = useState([0,0,0]);
   let [modal, setStatus] = useState(false);  
   let [index, indexStatus] = useState(0);
+  let [n글제목, nDoUpdate] = useState('');
+  let [iuputState, inputUpdate] = useState(false);
 
   return (
     <div className="App">
@@ -83,24 +85,43 @@ function App() {
             }
             setStatus(temp);
             indexStatus(index);
-                
-            }}>{title}<span onClick={()=> {
+            //이벤트 버블링?    
+            }}>{title}<span onClick={(e)=> {
+              e.stopPropagation(); //이벤트 버블링 방지
               let temp = [...좋아요]; //array 사본
               temp[index] = temp[index] + 1
               update(temp);
             }}> 👍 </span> {좋아요[index]} </h4>
             <p>1월 1일</p>
+            <button onClick={()=>{
+              let temp = [...글제목];
+              temp.splice(index,index+1);
+              console.log(temp)
+              doUpdate(temp);
+            }}>삭제</button>
            </div>
           )      
 
         })
       } 
 
+      <input type="text" id='titleInput' onChange={(e)=> {
+          nDoUpdate(e.target.value);
+      }}></input>
+
+      <button onClick={()=>{
+        //글추가
+        let temp = [...글제목];
+        temp.push(n글제목);
+        doUpdate(temp);
+        inputUpdate(true);
+      }}>입력</button>
+
       {
         //if안됨... 삼항연산자 사용
         modal == true ? <Modal index = {index} title={글제목} callback={doUpdate}></Modal> : ''
       }
-
+      <Profile></Profile>
 
     </div>
   ); 
@@ -127,6 +148,31 @@ function Modal(props) {
     </div>
   );
 };
+
+
+//예전버전임
+//class 
+class Profile extends React.Component {
+  //constructor : class의 변수/초기값 저장할 때 
+  constructor() {
+    super();
+    this.state = {name : 'kim'}; //useState
+  }
+
+  chageName() {
+    this.setState({name:'Lee'})
+  }
   
+  render() {
+    return(
+      <div>
+        <p>{this.state.name}</p>
+        <button onClick={()=>{
+            this.chageName();
+        }}>버튼</button>  
+      </div>
+    )
+  }
+}
 
 export default App;
