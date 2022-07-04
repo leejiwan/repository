@@ -161,8 +161,11 @@ class Profile extends React.Component {
 
   chageName() {
     this.setState({name:'Lee'})
+    console.log(this.state.name);
   }
+
   
+
   render() {
     return(
       <div>
