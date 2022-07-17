@@ -7,9 +7,11 @@ import { product, name } from './data.js' //import 문법
 import { Route, Routes, Link, useParams, useNavigate, Outlet } from 'react-router-dom'
 //public 폴더안은 변하지 않음
 import styled from 'styled-components'
+import axios from 'axios'
+import md5 from 'md5'
 
 function App() {
-  let [prod] = useState(product);
+  let [prod, setProd] = useState(product);
   //hook 유용한 함수..?
   let navigate = useNavigate();
 
@@ -34,6 +36,35 @@ function App() {
         <Route path='/' element={<ShoesData data={prod} />} />
         <Route path='*' element={<div>없는 페이지</div>} /> {/* 선언 이외의 모든 것*/}
       </Routes>
+      <button onClick={() => {
+        axios.get('https://codingapple1.github.io/shop/data2.json').then((data) => {
+          let temp = [...prod];
+          for (var i = 0; i < data.data.length; i++) {
+            temp.push(data.data[i]);
+          }
+          setProd(temp);
+        }).catch(() => {
+
+        });
+
+        //axios.post('', { name: 'kim' });
+        //Promise.all([axios.get(), axios.get()]).then(() => {
+
+        //});
+      }}>더보기</button>
+      <button onClick={() => {
+        let ts = '1';
+        let apiKey = '80c4041a1fd0e215e6a0fbee4d2dd9fc'
+        let privateKey = 'd32e3a2c4fd6fe64342fd18219650e06d2ae4f5b'
+        //046fdf51a88784d2148448e7e7d9534c
+        console.log(md5(ts + privateKey + apiKey));
+        axios.get('https://gateway.marvel.com:443/v1/public/characters', { params: { 'ts': ts, 'apikey': apiKey, 'hash': md5(ts + privateKey + apiKey) } }).then((data) => {
+          console.log(data)
+        }).catch((res) => {
+          console.log(res);
+        })
+
+      }}>test</button>
     </div>
   );
 }
@@ -83,19 +114,10 @@ class Detail2 extends React.Component {
 }
 */
 function Detail(props) {
-  useEffect(() => {
-    /*mount,update 코드 실행
-      html 렌더링 완료 후 실행
-      오래걸리는 작업(연산, 타이머, 서버에서 데이터 가져오는 작업)
-    */
-    /*
-     Todo 페이지 방문 후 2초 지나면 div 숨기기
-    */
-    console.log('start')
-  });
 
   let [count, setCount] = useState(0);
-
+  let [alert, setAlert] = useState(true);
+  let [content, setContent] = useState('');
   let id = useParams();
   let Yellowbtn = styled.button`
   backgound : ${props => props.bg};
@@ -106,10 +128,52 @@ function Detail(props) {
   color : grey;
   backgound: ${props => props.bg == 'red' ? 'red' : 'blue'};
 `;
-  debugger;
+
+  useEffect(() => {
+    /*mount,update 코드 실행
+      html 렌더링 완료 후 실행
+      오래걸리는 작업(연산, 타이머, 서버에서 데이터 가져오는 작업)
+       dependence 공부하기
+    */
+    /*
+      useEffect(() => {}) 1. 재렌더링마다 코드실행하고 싶으면
+      useEffect(() => {}, [])  2. mount시 1회 코드실행하고 싶으면
+      useEffect(() => {
+        return ()=> {
+          3. unmount시 1회 코드실행하고 싶으면
+        }
+      }, [])
+    */
+
+    let a = setTimeout(() => {
+      setAlert(false);
+    }, 2000)
+    return () => {
+      /*
+       useEffec 동작 전 실행
+      */
+      clearTimeout(a);
+      console.log(isFinite(content))
+      if (!isFinite(content)) {
+        setContent('');
+      }
+    }
+  });
+
+
+  // debugger;
   return (
     <div className="container">
       <div className="row">
+        <input type="text" onChange={(e) => {
+          setContent(e.target.value);
+          if (!isFinite(content)) {
+            e.target.value = '';
+          }
+        }}></input>
+        {
+          alert == true ? <div>zzzz</div> : null
+        }
         <Yellowbtn bg='red' onClick={() => {
           setCount(count + 1);
         }}>button</Yellowbtn>
@@ -124,7 +188,24 @@ function Detail(props) {
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
-    </div>
+
+      <Nav variant="tabs" defaultActiveKey="link0">
+        <Nav.Item>
+          <Nav.Link eventKey="link0">버튼0</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link1">버튼1</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link2">버튼2</Nav.Link>
+        </Nav.Item>
+      </Nav>
+
+
+
+
+
+    </div >
   );
 }
 
