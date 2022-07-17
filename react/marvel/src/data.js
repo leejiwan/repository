@@ -1,5 +1,6 @@
 import axios from 'axios';
 import md5 from 'md5';
+import { Nav } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -15,21 +16,25 @@ const privateKey = '55f6f480948040d1bc519fb1fe837db08302e7d2'
 //https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0
 function KitchenSinkExample(search) {
     let [list, setList] = useState([]);
-    console.log(search)
+    let [foot, setFoot] = useState('');
     useEffect(()=> {
+        let paramObj = {};
+        paramObj.ts = ts;
+        paramObj.apikey = apiKey;
+        paramObj.hash = md5(ts + privateKey + apiKey);
+        paramObj.orderBy = 'name';
+        if(search.data != null && search.data != '') {
+            paramObj.nameStartsWith = search.data;
+        }
+      
         axios.get('https://gateway.marvel.com:443/v1/public/characters', { 
-            params: { 
-                'ts': ts, 
-                'apikey': apiKey, 
-                'hash': md5(ts + privateKey + apiKey),
-                'orderBy' : 'name'
-            } }).then((data) => {
-                console.log(data)
+            params: paramObj }).then((data) => {
+            setFoot(data.data.attributionHTML);    
             setList(data.data.data.results);
         }).catch((res) => {
-            console.log(res);
+            alert(res.message);
         })
-    }, [])
+    }, [search])
 
     
   
@@ -44,7 +49,6 @@ function KitchenSinkExample(search) {
                     <ListGroup className="list-group-flush">
                         <ListGroup.Item>{data.name}</ListGroup.Item>
                         <ListGroup.Item>{data.description}</ListGroup.Item>
-                        <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
                     </ListGroup>
                     <Card.Body>
                         <Card.Link href="#">Card Link</Card.Link>
@@ -52,9 +56,10 @@ function KitchenSinkExample(search) {
                     </Card.Body>
                 </Card>
                 </Col>
-            ))}
+            ))}  
         </Row>
-        }     
+        }
+        <div dangerouslySetInnerHTML={{__html:foot}}></div>     
     </div>  
   );
 }
