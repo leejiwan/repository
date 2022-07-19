@@ -118,6 +118,7 @@ function Detail(props) {
   let [count, setCount] = useState(0);
   let [alert, setAlert] = useState(true);
   let [content, setContent] = useState('');
+  let [tabChange, setabChange] = useState(0);
   let id = useParams();
   let Yellowbtn = styled.button`
   backgound : ${props => props.bg};
@@ -168,7 +169,7 @@ function Detail(props) {
         <input type="text" onChange={(e) => {
           setContent(e.target.value);
           if (!isFinite(content)) {
-            e.target.value = '';
+            target.value = '';
           }
         }}></input>
         {
@@ -191,21 +192,50 @@ function Detail(props) {
 
       <Nav variant="tabs" defaultActiveKey="link0">
         <Nav.Item>
-          <Nav.Link eventKey="link0">버튼0</Nav.Link>
+          <Nav.Link onClick={() => {
+            setabChange(0);
+          }} eventKey="link0">버튼0</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link1">버튼1</Nav.Link>
+          <Nav.Link onClick={() => {
+            setabChange(1);
+          }} eventKey="link1">버튼1</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link2">버튼2</Nav.Link>
+          <Nav.Link onClick={() => {
+            setabChange(2);
+          }} eventKey="link2">버튼2</Nav.Link>
         </Nav.Item>
-      </Nav>
+      </Nav >
 
-
+      <CustomTab data={tabChange} />
 
 
 
     </div >
+  );
+}
+
+
+let CustomTab = (tabChange) => {
+  let [fade, setFade] = useState('');
+  useEffect(() => {
+    setTimeout(() => {
+      setFade('end');
+    }, 100)
+    //setFade('end');
+    return () => {
+      //useEffect 전에 실행
+      setFade('');
+    }
+
+
+  }, [tabChange])
+
+  return (
+    <div className={'before' + fade}>
+      {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tabChange]}
+    </div>
   );
 }
 

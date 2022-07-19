@@ -47,11 +47,6 @@ function Detail() {
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                     <ListGroup.Item>{info.description}</ListGroup.Item>
-                    {
-                        info.comics.item((data, index) => {
-                            <ListGroup.Item>{data.resourceURI}</ListGroup.Item>
-                        })
-                    }
 
                 </ListGroup>
                 <Card.Body>
