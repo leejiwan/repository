@@ -208,7 +208,7 @@ function Detail(props) {
         </Nav.Item>
       </Nav >
 
-      <CustomTab data={tabChange} />
+      <CustomTab data={tabChange} data2={props} />
 
 
 
@@ -217,8 +217,9 @@ function Detail(props) {
 }
 
 
-let CustomTab = (tabChange) => {
+let CustomTab = (data) => {
   let [fade, setFade] = useState('');
+
   useEffect(() => {
     setTimeout(() => {
       setFade('end');
@@ -230,11 +231,11 @@ let CustomTab = (tabChange) => {
     }
 
 
-  }, [tabChange])
+  }, [data.data])
 
   return (
     <div className={'before' + fade}>
-      {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tabChange]}
+      {[<div>{data.data2.data[0].title}</div>, <div>{data.data2.data[1].title}</div>, <div>{data.data2.data[2].title}</div>][data.data]}
     </div>
   );
 }
