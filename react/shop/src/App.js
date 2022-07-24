@@ -9,6 +9,8 @@ import { Route, Routes, Link, useParams, useNavigate, Outlet } from 'react-route
 import styled from 'styled-components'
 import axios from 'axios'
 import md5 from 'md5'
+import Cart from './Cart.js'
+
 
 function App() {
   let [prod, setProd] = useState(product);
@@ -33,6 +35,7 @@ function App() {
           <Route path='member' element={<div>zzzz</div>} /> {/*nested routes 여러 유사한 페이지 필요*/}
         </Route>
         <Route path='/detail/:id' element={<Detail data={prod} />} />
+        <Route path='/cart' element={<Cart />} />
         <Route path='/' element={<ShoesData data={prod} />} />
         <Route path='*' element={<div>없는 페이지</div>} /> {/* 선언 이외의 모든 것*/}
       </Routes>
