@@ -6,10 +6,16 @@ import { useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 
+function getComicsThumbnail(paramObj) {
+
+}
+
+
 function Detail() {
     let param = useParams();
     let [info, setInfo] = useState({});
     let [thumbnail, setTumbnail] = useState({});
+    let [story, setStory] = useState([]);
     let paramObj = {};
     paramObj.ts = ts;
     paramObj.apikey = apiKey;
@@ -26,7 +32,8 @@ function Detail() {
         }).then((data) => {
             setInfo(data.data.data.results[0]);
             setTumbnail(data.data.data.results[0].thumbnail);
-
+            setStory(data.data.data.results[0].stories.items[0]);
+            getComicsThumbnail(paramObj)
         }).catch((res) => {
             alert(res.message);
         })
@@ -47,7 +54,10 @@ function Detail() {
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                     <ListGroup.Item>{info.description}</ListGroup.Item>
-
+                </ListGroup>
+                <ListGroup className="list-group-flush">
+                    <ListGroup.Item>{story.name}</ListGroup.Item>
+                    <ListGroup.Item>{story.resourceURI}</ListGroup.Item>
                 </ListGroup>
                 <Card.Body>
                     <Card.Link href="#">Card Link</Card.Link>

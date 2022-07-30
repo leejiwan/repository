@@ -29,6 +29,7 @@ function KitchenSinkExample(search) {
         }).then((data) => {
             setFoot(data.data.attributionHTML);
             setList(data.data.data.results);
+            console.log(data.data.data)
         }).catch((res) => {
             alert(res.message);
         })
@@ -43,7 +44,9 @@ function KitchenSinkExample(search) {
                     {list.map((data, idx) => (
                         <Col key={idx}>
                             <Card>
-                                <Card.Img variant="top" src={data.thumbnail.path + '.' + data.thumbnail.extension} />
+                                <Card.Img variant="top" src={data.thumbnail.path + '.' + data.thumbnail.extension} onClick={() => {
+                                    navigate('/detail/' + data.id);
+                                }} />
                                 <ListGroup className="list-group-flush">
                                     <ListGroup.Item onClick={() => {
                                         //let url = '/detail/' + data.id;
@@ -52,8 +55,8 @@ function KitchenSinkExample(search) {
                                     <ListGroup.Item>{data.description}</ListGroup.Item>
                                 </ListGroup>
                                 <Card.Body>
-                                    <Card.Link href="#">Card Link</Card.Link>
-                                    <Card.Link href="#">Another Link</Card.Link>
+                                    <Card.Link href="#">test Link</Card.Link>
+                                    <Card.Link href="#">test Link2</Card.Link>
                                 </Card.Body>
                             </Card>
                         </Col>

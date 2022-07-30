@@ -1,7 +1,11 @@
 import { Table } from 'react-bootstrap'
 
-
+/*
+Redux
+*/
 function Cart() {
+
+
     return (
         <div>
             <Table>
