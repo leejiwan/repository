@@ -1,40 +1,53 @@
 import { Table } from "react-bootstrap";
 //redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { update, update2 } from "./userSlice.js";
 /*
 Redux
 */
 function Cart() {
-  let a = useSelector(state => {
-    return state;
-  });
-  console.log(a.prod);
-  return (
-    <div>
-      <Table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>상품명</th>
-            <th>수량</th>
-            <th>변경하기</th>
-          </tr>
-        </thead>
-        <tbody>
-          {a.prod.map((data, index) => {
-            return (
-              <tr>
-                <td>{data.id}</td>
-                <td>{data.name}</td>
-                <td>{data.count}</td>
-                <td>안녕</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </div>
-  );
+    let a = useSelector(state => {
+        return state;
+    });
+
+    let dispatch = useDispatch(); //store.js로 요청보내주는 함수
+
+    console.log(a)
+    return (
+        <div>
+            {a.user.name}의 장바구니
+            <button onClick={() => {
+                dispatch(update2(a));
+            }}>{a.user.age}</button>
+            <Table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>상품명</th>
+                        <th>수량</th>
+                        <th>변경하기</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {a.prod.map((data, index) => {
+                        return (
+                            <tr>
+                                <td>{data.id}</td>
+                                <td>{data.name}</td>
+                                <td>{data.count}</td>
+                                <td>
+                                    <button onClick={() => {
+                                        dispatch(update());
+                                    }}>안뇽
+                                    </button>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </Table>
+        </div>
+    );
 }
 
 export default Cart;
