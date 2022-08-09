@@ -48,3 +48,7 @@ component : 반복적인 html 축약시 // 큰 페이지들 // 자주변경되�
 - component 재활용이 어려움;
   2.Redux등 외부 라이브러리
 - npm install @reduxjs/toolkit react-redux
+
+# Redux
+
+- component간의 state 공유

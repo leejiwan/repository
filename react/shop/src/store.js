@@ -32,6 +32,20 @@ let prod = createSlice({
     { id: 0, name: "nike", count: 2 },
     { id: 1, name: "adidas", count: 1 },
   ],
+
+  reducers: {
+    updateProd(state, param) {
+      state[param.payload].count++;
+
+    },
+    addProd(state) {
+      let obj = {};
+      obj.id = 3;
+      obj.name = 'adidas';
+      obj.count = 1;
+      state.push(obj)
+    }
+  }
 });
 
 export default configureStore({
@@ -42,3 +56,4 @@ export default configureStore({
 });
 
 export let { update, update2 } = user.actions; //오른쪽 자료를 변수로 뺴기 위한 문법
+export let { updateProd, addProd } = prod.actions;

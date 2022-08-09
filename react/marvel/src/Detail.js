@@ -5,7 +5,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-
+import { useSelector, useDispatch } from "react-redux";
+import { addProd } from "./store.js";
 function getComicsThumbnail(paramObj) {
 
 }

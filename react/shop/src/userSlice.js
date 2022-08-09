@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit"; //redux 개선버전
 
 let user = createSlice({
   name: "user",

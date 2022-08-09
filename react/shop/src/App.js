@@ -10,7 +10,8 @@ import styled from 'styled-components'
 import axios from 'axios'
 import md5 from 'md5'
 import Cart from './Cart.js'
-
+import { useSelector, useDispatch } from "react-redux";
+import { addProd } from "./store.js";
 
 function App() {
   let [prod, setProd] = useState(product);
@@ -117,7 +118,11 @@ class Detail2 extends React.Component {
 }
 */
 function Detail(props) {
+  let a = useSelector(state => {
+    return state;
+  });
 
+  let dispatch = useDispatch(); //store.js로 요청보내주는 함수
   let [count, setCount] = useState(0);
   let [alert, setAlert] = useState(true);
   let [content, setContent] = useState('');
@@ -189,7 +194,9 @@ function Detail(props) {
           <h4 className="pt-5">{props.data[id.id].title}</h4>
           <p>{props.data[id.id].content}</p>
           <p>{props.data[id.id].price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button className="btn btn-danger" onClick={() => {
+            dispatch(addProd());
+          }}>주문하기</button>
         </div>
       </div>
 

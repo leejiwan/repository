@@ -1,7 +1,7 @@
 import { Table } from "react-bootstrap";
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { update, update2 } from "./userSlice.js";
+import { update, update2, updateProd } from "./store.js";
 /*
 Redux
 */
@@ -12,7 +12,6 @@ function Cart() {
 
     let dispatch = useDispatch(); //store.js로 요청보내주는 함수
 
-    console.log(a)
     return (
         <div>
             {a.user.name}의 장바구니
@@ -36,9 +35,9 @@ function Cart() {
                                 <td>{data.name}</td>
                                 <td>{data.count}</td>
                                 <td>
-                                    <button onClick={() => {
-                                        dispatch(update());
-                                    }}>안뇽
+                                    <button onClick={(e) => {
+                                        dispatch(updateProd(data.id));
+                                    }}>+
                                     </button>
                                 </td>
                             </tr>
