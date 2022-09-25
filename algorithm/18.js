@@ -6,7 +6,7 @@ function solution(s) {
     var arr = [...s];
     var len = arr.length;
     var i = 0;
-
+    console.log(arr)
 
 
     if (arr[0] == '(' && arr[len - 1] == ')') {
@@ -35,3 +35,4 @@ function solution(s) {
     console.log(answer)
     return answer;
 }
+solution("()()")

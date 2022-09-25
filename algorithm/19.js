@@ -16,7 +16,6 @@ function solution(nums) {
     }
 
 
-    console.log(answer)
     return answer.length;
 }
 solution([3, 3, 3, 2, 2, 2])

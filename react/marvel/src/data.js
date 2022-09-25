@@ -29,11 +29,32 @@ function KitchenSinkExample(search) {
         }).then((data) => {
             setFoot(data.data.attributionHTML);
             setList(data.data.data.results);
-            console.log(data.data.data)
+            console.log(data.data.data.results);
+
+            axios.post('https://openapi.naver.com/v1/papago/n2mt', {
+                source: 'en',
+                target: 'ko',
+                text: 'leejiwan'
+            },
+                {
+                    headers: {
+                        'X-Naver-Client-Id': 'tWZ2IcLz4JgeLo6cHMxE',
+                        'X-Naver-Client-Secret': 'ivWydgLNvB',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'charset': 'UTF-8'
+                    }
+                }).then((data) => {
+                    console.log(data);
+                }).catch((res) => {
+                    console.log('res::' + res);
+                });
         }).catch((res) => {
             alert(res.message);
         })
     }, [search])
+
+
+
 
 
 
