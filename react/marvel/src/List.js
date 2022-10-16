@@ -9,11 +9,12 @@ import { useNavigate } from 'react-router-dom'
 import { ts, apiKey, privateKey } from './Const.js'
 
 //https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0
-function List(search) {
+function ListData(search) {
     let [list, setList] = useState([]);
     let [foot, setFoot] = useState('');
     let navigate = useNavigate();
 
+    debugger;
     useEffect(() => {
         let paramObj = {};
         paramObj.ts = ts;
@@ -23,43 +24,16 @@ function List(search) {
         if (search.data != null && search.data != '') {
             paramObj.nameStartsWith = search.data;
         }
-
         axios.get('https://gateway.marvel.com:443/v1/public/characters', {
             params: paramObj
         }).then((data) => {
+            console.log(data.data.data.results)
             setFoot(data.data.attributionHTML);
             setList(data.data.data.results);
-            console.log(data.data.data.results);
-            /*
-                        //papago test
-                        axios.post('https://openapi.naver.com/v1/papago/n2mt', {
-                            source: 'en',
-                            target: 'ko',
-                            text: 'leejiwan'
-                        },
-                            {
-                                headers: {
-                                    'X-Naver-Client-Id': 'tWZ2IcLz4JgeLo6cHMxE',
-                                    'X-Naver-Client-Secret': 'ivWydgLNvB',
-                                    'Content-Type':
-                                    
-                                    'application/x-www-form-urlencoded',
-                                    'charset': 'UTF-8'
-                                }
-                            }).then((data) => {
-                                console.log(data);
-                            }).catch((res) => {
-                                console.log('res::' + res);
-                            });
-            */
         }).catch((res) => {
-            alert(res.message);
+            alert(res);
         })
     }, [search])
-
-
-
-
 
 
     return (
@@ -75,13 +49,13 @@ function List(search) {
                                 <ListGroup className="list-group-flush">
                                     <ListGroup.Item onClick={() => {
                                         //let url = '/detail/' + data.id;
-                                        navigate('/detail/' + data.id)
+                                        // navigate('/detail/' + data.id)
                                     }}>{data.name}</ListGroup.Item>
                                     <ListGroup.Item>{data.description == '' ? 'No Data' : data.description}</ListGroup.Item>
                                 </ListGroup>
                                 <Card.Body>
-                                    <Card.Link href="#">test Link</Card.Link>
-                                    <Card.Link href="#">test Link2</Card.Link>
+                                    <Card.Link href="#">test1111</Card.Link>
+                                    <Card.Link href="#">test1222</Card.Link>
                                 </Card.Body>
                             </Card>
                         </Col>
@@ -96,5 +70,5 @@ function List(search) {
 
 
 
-export { List };
+export { ListData };
 

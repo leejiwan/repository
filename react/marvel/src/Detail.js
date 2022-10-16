@@ -5,43 +5,52 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+/*
 function getComicsThumbnail(paramObj) {
 
 }
-
+*/
 
 function Detail() {
     let param = useParams();
     let [info, setInfo] = useState({});
     let [thumbnail, setTumbnail] = useState({});
-    let [story, setStory] = useState([]);
+    let [comic, setComic] = useState([]);
     let [urls, setUrls] = useState([]);
     let paramObj = {};
     paramObj.ts = ts;
     paramObj.apikey = apiKey;
     paramObj.hash = md5(ts + privateKey + apiKey);
-    debugger;
-    useEffect(() => {
-        let paramObj = {};
-        paramObj.ts = ts;
-        paramObj.apikey = apiKey;
-        paramObj.hash = md5(ts + privateKey + apiKey);
-        debugger;
 
-        axios.get('https://gateway.marvel.com:443/v1/public/characters/' + param.id, {
-            params: paramObj
+    useEffect(() => {
+        let comicsData = (data) => {
+            let array = [];
+            for (var i = 0; i < data.items.length; i++) {
+                axios.get(data.items[i].resourceURI, {
+                    params: paramObj
+                }).then((result) => {
+                    array.push(result);
+                }).catch((res) => {
+                    alert(res.message);
+                })
+            }
+            setComic(array);
+        }
+
+        axios({
+            'method': 'GET',
+            'url': 'https://gateway.marvel.com:443/v1/public/characters/' + param.id,
+            'params': paramObj
         }).then((data) => {
+            comicsData(data.data.data.results[0].comics);
             setInfo(data.data.data.results[0]);
             setTumbnail(data.data.data.results[0].thumbnail);
-            setStory(data.data.data.results[0].series.items);
             setUrls(data.data.data.results[0].urls);
         }).catch((res) => {
             alert(res.message);
         })
+    }, [param.id]);
 
-        console.log(param)
-    }, [param.id])
-    debugger;
     return (
         <div>
             <Card >
@@ -58,9 +67,12 @@ function Detail() {
                 </ListGroup>
                 <ListGroup className="list-group-flush">
                     {
-                        story.map((data, index) => {
+                        comic.map((data, index) => {
+                            console.log(data.data.results[0])
                             return (
-                                <ListGroup.Item>{data.name}</ListGroup.Item>
+                                <div key={index}>
+                                    <ListGroup.Item>{data.data.results[0].title}</ListGroup.Item>
+                                </div>
                             )
                         })
                     }
@@ -69,7 +81,7 @@ function Detail() {
                     {
                         urls.map((data, index) => {
                             return (
-                                <div>
+                                <div key={index}>
                                     <Card.Link href={data.url}>{data.type}</Card.Link>
                                 </div>
                             )
