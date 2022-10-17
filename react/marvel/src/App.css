@@ -9,6 +9,11 @@
   height: 220px;
 }
 
+.card-img-top2 {
+  width: 40%;
+  height: 200px;
+}
+
 .App {
   text-align: center;
 }
