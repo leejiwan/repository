@@ -1,5 +1,5 @@
 import './App.css';
-import { Nav, Navbar, Container } from 'react-bootstrap';
+import { Navbar, Container } from 'react-bootstrap';
 import { useState } from 'react';
 import { ListData } from './List.js'
 import { Detail } from './Detail.js'
@@ -13,10 +13,9 @@ function App() {
     <div className="App">
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">React</Navbar.Brand>
-          <Nav className="me-auto">
-
-          </Nav>
+          <Navbar.Brand href='' onClick={() => {
+            navigate('/');
+          }}>React</Navbar.Brand>
         </Container>
         <input type="text" onChange={(e) => {
           setSearch(e.target.value);

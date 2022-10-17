@@ -5,18 +5,19 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-/*
-function getComicsThumbnail(paramObj) {
+import Accordion from 'react-bootstrap/Accordion';
+import { Footer } from './Footer.js'
 
-}
-*/
 
 function Detail() {
   let param = useParams();
   let [info, setInfo] = useState({});
   let [thumbnail, setTumbnail] = useState({});
   let [comic, setComic] = useState([]);
+  let [series, setSeries] = useState([]);
   let [urls, setUrls] = useState([]);
+  let [foot, setFoot] = useState('');
+  let [lodingFlag, setlodingFlag] = useState(true);
   let paramObj = {};
   paramObj.ts = ts;
   paramObj.apikey = apiKey;
@@ -30,28 +31,27 @@ function Detail() {
     float: "left",
   }; //li
   let style2 = {
-    listStyle: "none",
-    margin: "0px",
-    padding: "0px",
     overflowX: "auto",
     whiteSpace: "nowrap",
   }; //ul
   useEffect(() => {
-    let comicsData = async data => {
+    let detailData = async (data, calllback) => {
       let array = [];
       for (var i = 0; i < data.items.length; i++) {
-        let res = await axios
-          .get(data.items[i].resourceURI, {
-            params: paramObj,
-          })
+        await axios.get(data.items[i].resourceURI, {
+          params: paramObj,
+        })
           .then(result => {
             array.push(result);
           })
           .catch(res => {
             alert(res.message);
           });
+        if (i == data.items.length) {
+          setlodingFlag(true)
+        }
       }
-      setComic(array);
+      calllback(array);
     };
 
     axios({
@@ -60,10 +60,13 @@ function Detail() {
       params: paramObj,
     })
       .then(data => {
-        comicsData(data.data.data.results[0].comics);
+        detailData(data.data.data.results[0].comics, setComic);
+        detailData(data.data.data.results[0].series, setSeries);
         setInfo(data.data.data.results[0]);
         setTumbnail(data.data.data.results[0].thumbnail);
         setUrls(data.data.data.results[0].urls);
+        setFoot(data.data.data.results[0].attributionHTML);
+        console.log(data.data.data.results[0])
       })
       .catch(res => {
         alert(res.message);
@@ -84,28 +87,64 @@ function Detail() {
           <Card.Title>{info.name}</Card.Title>
           <Card.Text></Card.Text>
         </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroup.Item>{info.description}</ListGroup.Item>
-        </ListGroup>
-        <ListGroup horizontal>
-          {comic.map((data, index) => {
-            return (
-              <div key={index} style={style}>
-                <ListGroup.Item>
-                  {data.data.data.results[0].title}
-                </ListGroup.Item>
-                <Card.Img
-                  variant="top2"
-                  src={
-                    data.data.data.results[0].thumbnail.path +
-                    "." +
-                    data.data.data.results[0].thumbnail.extension
-                  }
-                ></Card.Img>
-              </div>
-            );
-          })}
-        </ListGroup>
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>description</Accordion.Header>
+            <Accordion.Body>
+              <ListGroup className="list-group-flush">
+                <ListGroup.Item>{info.description}</ListGroup.Item>
+              </ListGroup>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>comics</Accordion.Header>
+            <Accordion.Body>
+              <ListGroup horizontal style={style2}>
+                {comic.map((data, index) => {
+                  return (
+                    <div key={index} style={style}>
+                      <ListGroup.Item>
+                        {data.data.data.results[0].title}
+                      </ListGroup.Item>
+                      <Card.Img
+                        variant="top2"
+                        src={
+                          data.data.data.results[0].thumbnail.path +
+                          "." +
+                          data.data.data.results[0].thumbnail.extension
+                        }
+                      ></Card.Img>
+                    </div>
+                  );
+                })}
+              </ListGroup>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="2">
+            <Accordion.Header>story</Accordion.Header>
+            <Accordion.Body>
+              <ListGroup horizontal style={style2}>
+                {series.map((data, index) => {
+                  return (
+                    <div key={index} style={style}>
+                      <ListGroup.Item>
+                        {data.data.data.results[0].title}
+                      </ListGroup.Item>
+                      <Card.Img
+                        variant="top2"
+                        src={
+                          data.data.data.results[0].thumbnail.path +
+                          "." +
+                          data.data.data.results[0].thumbnail.extension
+                        }
+                      ></Card.Img>
+                    </div>
+                  );
+                })}
+              </ListGroup>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
         <Card.Body>
           {urls.map((data, index) => {
             return (

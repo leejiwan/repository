@@ -7,6 +7,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { ts, apiKey, privateKey } from './Const.js'
+import { Footer } from './Footer.js'
 
 //https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0
 function ListData(search) {
@@ -27,7 +28,6 @@ function ListData(search) {
         axios.get('https://gateway.marvel.com:443/v1/public/characters', {
             params: paramObj
         }).then((data) => {
-            console.log(data.data.data.results)
             setFoot(data.data.attributionHTML);
             setList(data.data.data.results);
         }).catch((res) => {
@@ -62,8 +62,7 @@ function ListData(search) {
                     ))}
                 </Row>
             }
-
-            <div dangerouslySetInnerHTML={{ __html: foot }}></div>
+            <Footer data={foot}></Footer>
         </div>
     );
 }
