@@ -22,6 +22,20 @@ function Detail() {
   paramObj.apikey = apiKey;
   paramObj.hash = md5(ts + privateKey + apiKey);
 
+  let style = {
+    display: "inline-block",
+    margin: "0px",
+    marginRight: "15px",
+    padding: "0px",
+    float: "left",
+  }; //li
+  let style2 = {
+    listStyle: "none",
+    margin: "0px",
+    padding: "0px",
+    overflowX: "auto",
+    whiteSpace: "nowrap",
+  }; //ul
   useEffect(() => {
     let comicsData = async data => {
       let array = [];
@@ -73,11 +87,10 @@ function Detail() {
         <ListGroup className="list-group-flush">
           <ListGroup.Item>{info.description}</ListGroup.Item>
         </ListGroup>
-        <ListGroup className="list-group-flush">
+        <ListGroup horizontal>
           {comic.map((data, index) => {
-            console.log(data.data.data.results[0]);
             return (
-              <div key={index}>
+              <div key={index} style={style}>
                 <ListGroup.Item>
                   {data.data.data.results[0].title}
                 </ListGroup.Item>
