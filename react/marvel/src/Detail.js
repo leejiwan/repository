@@ -9,6 +9,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import { Footer } from './Footer.js'
 
 
+
 function Detail() {
   let param = useParams();
   let [info, setInfo] = useState({});
@@ -17,7 +18,7 @@ function Detail() {
   let [series, setSeries] = useState([]);
   let [urls, setUrls] = useState([]);
   let [foot, setFoot] = useState('');
-  let [lodingFlag, setlodingFlag] = useState(true);
+
   let paramObj = {};
   paramObj.ts = ts;
   paramObj.apikey = apiKey;
@@ -37,6 +38,7 @@ function Detail() {
   useEffect(() => {
     let detailData = async (data, calllback) => {
       let array = [];
+      let array2 = [];
       for (var i = 0; i < data.items.length; i++) {
         await axios.get(data.items[i].resourceURI, {
           params: paramObj,
@@ -47,9 +49,6 @@ function Detail() {
           .catch(res => {
             alert(res.message);
           });
-        if (i == data.items.length) {
-          setlodingFlag(true)
-        }
       }
       calllback(array);
     };
@@ -66,7 +65,6 @@ function Detail() {
         setTumbnail(data.data.data.results[0].thumbnail);
         setUrls(data.data.data.results[0].urls);
         setFoot(data.data.data.results[0].attributionHTML);
-        console.log(data.data.data.results[0])
       })
       .catch(res => {
         alert(res.message);
@@ -103,17 +101,20 @@ function Detail() {
                 {comic.map((data, index) => {
                   return (
                     <div key={index} style={style}>
-                      <ListGroup.Item>
-                        {data.data.data.results[0].title}
-                      </ListGroup.Item>
-                      <Card.Img
-                        variant="top2"
-                        src={
-                          data.data.data.results[0].thumbnail.path +
-                          "." +
-                          data.data.data.results[0].thumbnail.extension
-                        }
-                      ></Card.Img>
+                      <div className="flip-card">
+                        <div className="flip-card-inner">
+                          <div className="flip-card-front">
+                            <img src={
+                              data.data.data.results[0].thumbnail.path +
+                              "." +
+                              data.data.data.results[0].thumbnail.extension
+                            } alt="img" style={{ width: '100%', height: '100%' }} />
+                          </div>
+                          <div className="flip-card-back">
+                            <h1 style={{ 'fontSize': '1.0rem' }}>{data.data.data.results[0].title}</h1>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
@@ -127,17 +128,20 @@ function Detail() {
                 {series.map((data, index) => {
                   return (
                     <div key={index} style={style}>
-                      <ListGroup.Item>
-                        {data.data.data.results[0].title}
-                      </ListGroup.Item>
-                      <Card.Img
-                        variant="top2"
-                        src={
-                          data.data.data.results[0].thumbnail.path +
-                          "." +
-                          data.data.data.results[0].thumbnail.extension
-                        }
-                      ></Card.Img>
+                      <div className="flip-card">
+                        <div className="flip-card-inner">
+                          <div className="flip-card-front">
+                            <img src={
+                              data.data.data.results[0].thumbnail.path +
+                              "." +
+                              data.data.data.results[0].thumbnail.extension
+                            } alt="img" style={{ width: '100%', height: '100%' }} />
+                          </div>
+                          <div className="flip-card-back">
+                            <h1 style={{ 'fontSize': '1.0rem' }}>{data.data.data.results[0].title}</h1>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
@@ -155,7 +159,7 @@ function Detail() {
           })}
         </Card.Body>
       </Card>
-    </div>
+    </div >
   );
 }
 
