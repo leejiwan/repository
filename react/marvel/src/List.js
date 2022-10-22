@@ -1,13 +1,11 @@
 import axios from 'axios';
 import md5 from 'md5';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import ListGroup from 'react-bootstrap/ListGroup';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { ts, apiKey, privateKey } from './Const.js'
 import { Footer } from './Footer.js'
+import Button from 'react-bootstrap/Button';
 
 //https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0
 function ListData(search) {
@@ -15,7 +13,6 @@ function ListData(search) {
     let [foot, setFoot] = useState('');
     let navigate = useNavigate();
 
-    debugger;
     useEffect(() => {
         let paramObj = {};
         paramObj.ts = ts;
@@ -39,26 +36,27 @@ function ListData(search) {
     return (
         <div>
             {
-                <Row xs={1} md={4} className="g-4">
+                <Row xs={1} md={5} className="g-5" style={{ "--bs-gutter-x": "0rem", "--bs-gutter-y": "1rem" }}>
                     {list.map((data, idx) => (
-                        <Col key={idx}>
-                            <Card>
-                                <Card.Img variant="top" src={data.thumbnail.path + '.' + data.thumbnail.extension} onClick={() => {
-                                    navigate('/detail/' + data.id);
-                                }} />
-                                <ListGroup className="list-group-flush">
-                                    <ListGroup.Item onClick={() => {
-                                        //let url = '/detail/' + data.id;
-                                        // navigate('/detail/' + data.id)
-                                    }}>{data.name}</ListGroup.Item>
-                                    <ListGroup.Item>{data.description == '' ? 'No Data' : data.description}</ListGroup.Item>
-                                </ListGroup>
-                                <Card.Body>
-                                    <Card.Link href="#">test1111</Card.Link>
-                                    <Card.Link href="#">test1222</Card.Link>
-                                </Card.Body>
-                            </Card>
-                        </Col>
+                        <div className="flip-card" key={idx}>
+                            <div className="flip-card-inner">
+                                <div className="flip-card-front">
+                                    <img src={
+                                        data.thumbnail.path +
+                                        "." +
+                                        data.thumbnail.extension
+                                    } alt="img" style={{ width: '100%', height: '100%' }} />
+                                </div>
+                                <div className="flip-card-back">
+                                    <div style={{ padding: "12%" }}>
+                                        <h1 style={{ 'fontSize': '1.0rem' }}>{data.name}</h1>
+                                        <Button size="sm" onClick={() => {
+                                            navigate('/detail/' + data.id);
+                                        }}>learn more</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ))}
                 </Row>
             }
@@ -66,8 +64,6 @@ function ListData(search) {
         </div>
     );
 }
-
-
 
 export { ListData };
 

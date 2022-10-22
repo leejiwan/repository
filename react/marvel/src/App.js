@@ -15,9 +15,9 @@ function App() {
         <Container>
           <Navbar.Brand href='' onClick={() => {
             navigate('/');
-          }}>React</Navbar.Brand>
+          }}>hero search</Navbar.Brand>
         </Container>
-        <input type="text" onChange={(e) => {
+        <input type="text" placeholder="search" onChange={(e) => {
           setSearch(e.target.value);
         }}></input>
       </Navbar>
