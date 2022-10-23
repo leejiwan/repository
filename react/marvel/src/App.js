@@ -5,6 +5,7 @@ import { ListData } from './List.js'
 import { Detail } from './Detail.js'
 import { Route, Routes } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { Papago } from './Papago.js'
 
 function App() {
   let [search, setSearch] = useState('');
@@ -25,6 +26,7 @@ function App() {
         <Route path='/' element={<ListData data={search} />} />
         <Route path='/detail/:id' element={<Detail />} />
         <Route path='*' element={<div>없는 페이지</div>} /> {/* 선언 이외의 모든 것*/}
+        <Route path='/test' element={<Papago />} /> {/* TEST*/}
       </Routes>
     </div>
   );

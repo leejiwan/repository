@@ -25,10 +25,11 @@ function ListData(search) {
         axios.get('https://gateway.marvel.com:443/v1/public/characters', {
             params: paramObj
         }).then((data) => {
+            console.log(data)
             setFoot(data.data.attributionHTML);
             setList(data.data.data.results);
         }).catch((res) => {
-            alert(res);
+            alert('status::' + res.response.request.status + '\n' + 'statusText::' + res.response.request.statusText);
         })
     }, [search])
 
@@ -48,11 +49,11 @@ function ListData(search) {
                                     } alt="img" style={{ width: '100%', height: '100%' }} />
                                 </div>
                                 <div className="flip-card-back">
-                                    <div style={{ padding: "12%" }}>
+                                    <div style={{ padding: "26%" }}>
                                         <h1 style={{ 'fontSize': '1.0rem' }}>{data.name}</h1>
                                         <Button size="sm" onClick={() => {
                                             navigate('/detail/' + data.id);
-                                        }}>learn more</Button>
+                                        }}>detail more</Button>
                                     </div>
                                 </div>
                             </div>
