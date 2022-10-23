@@ -74,9 +74,9 @@ function Detail() {
   return (
     <div>
       <Card>
-        <ListGroup horizontal>
+        <ListGroup horizontal style={{ overflow: "auto", "whiteSpace": "nowrap" }}>
           <div style={{ textAlign: "center" }}>
-            <Card.Img style={{ width: "27rem" }}
+            <Card.Img style={{ width: "25rem" }}
               variant="top"
               src={thumbnail.path + "." + thumbnail.extension}
             />
