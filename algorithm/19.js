@@ -3,8 +3,6 @@ function solution(nums) {
     var answer = [];
     var maxNum = nums.length / 2;
 
-    var i = 0;
-
     for (var i = 0; i < nums.length; i++) {
         if (answer.length == maxNum) {
             break;

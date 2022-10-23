@@ -8,6 +8,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
+import { useSelector } from "react-redux"
 
 function Detail() {
   let param = useParams();
@@ -19,6 +20,7 @@ function Detail() {
   let [isOk1, setOk1] = useState(false);
   let [isOk2, setOk2] = useState(false);
   let [isOk3, setOk3] = useState(false);
+  let footText = useSelector((state) => { return state });
 
   let paramObj = {};
   paramObj.ts = ts;
@@ -74,8 +76,7 @@ function Detail() {
       <Card>
         <ListGroup horizontal>
           <div style={{ textAlign: "center" }}>
-            <Card.Img
-              style={{ width: "27rem" }}
+            <Card.Img style={{ width: "27rem" }}
               variant="top"
               src={thumbnail.path + "." + thumbnail.extension}
             />
@@ -86,8 +87,8 @@ function Detail() {
             <Button size="sm" onClick={() => {
               WindowPopup(info.urls[0].url);
             }}>learn more</Button>
-            <Card.Body style={{ position: "absolute", bottom: "0", witdh: "100%" }}>
-              <Card.Text >Data provided by Marvel. © 2022 MARVEL</Card.Text>
+            <Card.Body style={{ position: "absolute", bottom: "0", width: "100%" }}>
+              <Card.Text >{footText.footerData}</Card.Text>
             </Card.Body>
           </Card.Body>
         </ListGroup>

@@ -4,14 +4,16 @@ import Row from 'react-bootstrap/Row';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { ts, apiKey, privateKey } from './Const.js'
-import { Footer } from './Footer.js'
+import { Footer, FooterV1 } from './Footer.js'
 import Button from 'react-bootstrap/Button';
+import { useDispatch } from "react-redux"
+import { changeText } from './reducers/store.js'
 
 //https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0
 function ListData(search) {
     let [list, setList] = useState([]);
-    let [foot, setFoot] = useState('');
     let navigate = useNavigate();
+    let dispatch = useDispatch();
 
     useEffect(() => {
         let paramObj = {};
@@ -25,8 +27,7 @@ function ListData(search) {
         axios.get('https://gateway.marvel.com:443/v1/public/characters', {
             params: paramObj
         }).then((data) => {
-            console.log(data)
-            setFoot(data.data.attributionHTML);
+            dispatch(changeText(data.data.attributionText));
             setList(data.data.data.results);
         }).catch((res) => {
             alert('status::' + res.response.request.status + '\n' + 'statusText::' + res.response.request.statusText);
@@ -61,7 +62,7 @@ function ListData(search) {
                     ))}
                 </Row>
             }
-            <Footer data={foot}></Footer>
+            <FooterV1 />
         </div>
     );
 }
