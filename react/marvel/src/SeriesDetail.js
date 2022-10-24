@@ -2,7 +2,7 @@ import { ts, apiKey, privateKey } from "./Const.js";
 import { useEffect, useState } from "react";
 import md5 from "md5";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Spinner from 'react-bootstrap/Spinner';
 import ListGroup from "react-bootstrap/ListGroup";
@@ -10,16 +10,15 @@ import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import { useSelector } from "react-redux"
 
-function Detail() {
+function SeriesDetail() {
   let param = useParams();
+  let navigate = useNavigate();
   let [info, setInfo] = useState({});
   let [thumbnail, setTumbnail] = useState({});
-  let [comic, setComic] = useState([]);
-  let [series, setSeries] = useState([]);
-  let [story, setStory] = useState([]);
+  let [characters, setCharacters] = useState([]);
+  let [creators, setCreators] = useState([]);
   let [isOk1, setOk1] = useState(false);
   let [isOk2, setOk2] = useState(false);
-  let [isOk3, setOk3] = useState(false);
   let footText = useSelector((state) => { return state });
 
   let paramObj = {};
@@ -56,15 +55,14 @@ function Detail() {
 
     axios({
       method: "GET",
-      url: "https://gateway.marvel.com:443/v1/public/characters/" + param.id,
+      url: "https://gateway.marvel.com:443/v1/public/series/" + param.id,
       params: paramObj,
     })
       .then(data => {
         setInfo(data.data.data.results[0]);
         setTumbnail(data.data.data.results[0].thumbnail);
-        detailData(data.data.data.results[0].comics, setComic, setOk1);
-        detailData(data.data.data.results[0].series, setSeries, setOk2);
-        detailData(data.data.data.results[0].stories, setStory, setOk3);
+        detailData(data.data.data.results[0].characters, setCharacters, setOk1);
+        detailData(data.data.data.results[0].creators, setCreators, setOk2);
       })
       .catch(res => {
         alert('status::' + res.response.request.status + '\n' + 'statusText::' + res.response.request.statusText);
@@ -82,7 +80,7 @@ function Detail() {
             />
           </div>
           <Card.Body style={{ position: "relative" }}>
-            <Card.Title>{info.name}</Card.Title>
+            <Card.Title>{info.title}</Card.Title>
             <Card.Text>{info.description == ("" || null) ? "No Description!" : info.description}</Card.Text>
             <Button size="sm" onClick={() => {
               WindowPopup(info.urls[0].url);
@@ -94,28 +92,28 @@ function Detail() {
         </ListGroup>
         <Accordion defaultActiveKey="1">
           <Accordion.Item eventKey="1">
-            <Accordion.Header>comics</Accordion.Header>
+            <Accordion.Header>characters</Accordion.Header>
             <Accordion.Body>
               <ListGroup horizontal style={isOk1 == true ? { overflowX: "auto", whiteSpace: "nowrap" } : { marginLeft: "50%" }}>
                 {
-                  isOk1 == false ? <SpinnerDom /> : comic.length > 0 ? comic.map((data, index) => {
+                  isOk1 == false ? <SpinnerDom /> : characters.length > 0 ? characters.map((data, index) => {
                     return (
                       <div key={index} style={style}>
                         <div className="flip-card">
                           <div className="flip-card-inner">
                             <div className="flip-card-front">
-                              <img src={data.data.data.results[0].thumbnail != null ?
+                              <img src={
                                 data.data.data.results[0].thumbnail.path +
                                 "." +
                                 data.data.data.results[0].thumbnail.extension
-                                : '/logo.svg'
                               } alt="img" style={{ width: '100%', height: '100%' }} />
                             </div>
                             <div className="flip-card-back">
                               <div style={{ padding: "12%" }}>
-                                <h1 style={{ 'fontSize': '1.0rem' }}>{data.data.data.results[0].title}</h1>
+                                <h1 style={{ 'fontSize': '1.0rem' }}>{data.data.data.results[0].name}</h1>
                                 <Button size="lg" onClick={() => {
-                                  WindowPopup(data.data.data.results[0].urls[0].url);
+                                  //WindowPopup(data.data.data.results[0].urls[0].url);
+                                  navigate('/detail/' + data.data.data.results[0].id);
                                 }}>learn more</Button>
                               </div>
                             </div>
@@ -123,32 +121,31 @@ function Detail() {
                         </div>
                       </div>
                     );
-                  }) : <div>No Comics!</div>
+                  }) : <div>No Characters!</div>
                 }
               </ListGroup>
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="2">
-            <Accordion.Header>series</Accordion.Header>
+            <Accordion.Header>creators</Accordion.Header>
             <Accordion.Body>
               <ListGroup horizontal style={isOk2 == true ? { overflowX: "auto", whiteSpace: "nowrap" } : { marginLeft: "50%" }}>
 
-                {isOk2 == false ? <SpinnerDom /> : series.length > 0 ? series.map((data, index) => {
+                {isOk2 == false ? <SpinnerDom /> : creators.length > 0 ? creators.map((data, index) => {
                   return (
                     <div key={index} style={style}>
                       <div className="flip-card">
                         <div className="flip-card-inner">
                           <div className="flip-card-front">
-                            <img src={data.data.data.results[0].thumbnail != null ?
+                            <img src={
                               data.data.data.results[0].thumbnail.path +
                               "." +
                               data.data.data.results[0].thumbnail.extension
-                              : './logo.svg'
                             } alt="img" style={{ width: '100%', height: '100%' }} />
                           </div>
                           <div className="flip-card-back">
                             <div style={{ padding: "12%" }}>
-                              <h1 style={{ 'fontSize': '1.0rem' }}>{data.data.data.results[0].title}</h1>
+                              <h1 style={{ 'fontSize': '1.0rem' }}>{data.data.data.results[0].fullName}</h1>
                               <Button size="lg" onClick={() => {
                                 WindowPopup(data.data.data.results[0].urls[0].url);
                               }}>learn more</Button>
@@ -158,41 +155,7 @@ function Detail() {
                       </div>
                     </div>
                   );
-                }) : <div>No Series!</div>
-                }
-              </ListGroup>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="3">
-            <Accordion.Header>stroy</Accordion.Header>
-            <Accordion.Body>
-              <ListGroup horizontal style={isOk3 == true ? { overflowX: "auto", whiteSpace: "nowrap" } : { marginLeft: "50%" }}>
-                {isOk3 == false ? <SpinnerDom /> : story.length > 0 ? story.map((data, index) => {
-                  return (
-                    <div key={index} style={style}>
-                      <div className="flip-card">
-                        <div className="flip-card-inner">
-                          <div className="flip-card-front">
-                            <img src={data.data.data.results[0].thumbnail != null ?
-                              data.data.data.results[0].thumbnail.path +
-                              "." +
-                              data.data.data.results[0].thumbnail.extension
-                              : './logo.svg'
-                            } alt="img" style={{ width: '100%', height: '100%' }} />
-                          </div>
-                          <div className="flip-card-back">
-                            <div style={{ padding: "12%" }}>
-                              <h1 style={{ 'fontSize': '1.0rem' }}>{data.data.data.results[0].title}</h1>
-                              <Button size="lg" onClick={() => {
-                                WindowPopup(data.data.data.results[0].urls[0].url);
-                              }}>learn more</Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }) : <div>No Story!</div>
+                }) : <div>No creators!</div>
                 }
               </ListGroup>
             </Accordion.Body>
@@ -248,4 +211,4 @@ function RenderAccordion(result) {
   })
 }
 
-export { Detail };
+export { SeriesDetail };
