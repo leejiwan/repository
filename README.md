@@ -67,27 +67,6 @@ component : 반복적인 html 축약시 // 큰 페이지들 // 자주변경되�
 - 2. service-worker.js
 
 
-# Node+Express 서버와 React 연동
-
-1. nodejs 설치
-
-2. 작업폴더만들고 에디터로 오픈
-
-3. server.js 파일을 만들고 아래 코드 작성
-
- const express = require('express');
-const path = require('path');
-const app = express();
-
-app.listen(8080, function () {
-  console.log('listening on 8080')
-}); 
-
-
-4. 터미널을 열어서 npm init -y 입력 
-
-5. npm install express 이것도 입력  
-
 
 # react build
 - npm run build
