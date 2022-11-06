@@ -69,6 +69,17 @@ function Detail() {
       .catch(res => {
         alert('status::' + res.response.request.status + '\n' + 'statusText::' + res.response.request.statusText);
       });
+
+    axios({
+      method: "POST",
+      url: "http://115.85.180.140:3000/read/hero?id=" + param.id
+    }).then(datas => {
+
+    }).catch(res => {
+      //alert('status::' + res.response.request.status + '\n' + 'statusText::' + res.response.request.statusText);
+    });
+
+
   }, [param.id]);
 
   return (

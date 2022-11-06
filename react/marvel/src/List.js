@@ -2,7 +2,7 @@ import axios from 'axios';
 import md5 from 'md5';
 import Row from 'react-bootstrap/Row';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { resolvePath, useLinkClickHandler, useNavigate } from 'react-router-dom'
 import { ts, apiKey, privateKey } from './Const.js'
 import { Footer, FooterV1 } from './Footer.js'
 import Button from 'react-bootstrap/Button';
@@ -43,16 +43,42 @@ function ListData(search) {
         axios.get(gubunObj[param.gubun], {
             params: paramObj
         }).then((data) => {
-            setList(data.data.data.results);
+            // setList(data.data.data.results);
             dispatch(changeText(data.data.attributionText));
+            callbackFnc(data.data.data.results);
         }).catch((res) => {
             //alert('status::' + res.response.request.status + '\n' + 'statusText::' + res.response.request.statusText);
         })
+
+        let callbackFnc = (data) => {
+            let ids = '';
+            data.map((result, index) => {
+                index == 0 ? ids += result.id : ids += ',' + result.id;
+            });
+            axios({
+                method: "GET",
+                url: "http://115.85.180.140:3000/read/" + param.gubun + "?id=" + ids
+            }).then(datas => {
+                data.map((result, index) => {
+                    datas.data.map((result2, index2) => {
+                        if (result.id == result2.ITEMID) {
+                            result.cnt = result2.CNT;
+                        }
+                    })
+                })
+                setList(data);
+            }).catch(res => {
+                //alert('status::' + res.response.request.status + '\n' + 'statusText::' + res.response.request.statusText);
+            });
+        }
+
+
+
     }, [search, param])
 
 
     return (
-        <div>
+        <div style={{ "marginTop": "55px" }}>
             {
                 <Row xs={1} md={5} className="g-5" style={{ "--bs-gutter-x": "0rem", "--bs-gutter-y": "1rem" }}>
                     {list.map((data, idx) => (
@@ -66,8 +92,10 @@ function ListData(search) {
                                     } alt="img" style={{ width: '100%', height: '100%' }} />
                                 </div>
                                 <div className="flip-card-back">
-                                    <div style={{ padding: "26%" }}>
+                                    <div style={{ padding: "11%" }}>
                                         <h1 style={{ 'fontSize': '1.0rem' }}>{param.gubun == 'hero' ? data.name : data.title}</h1>
+                                        <h1 style={{ 'fontSize': '1.0rem' }}>readCnt : {data.cnt}</h1>
+
                                         <Button size="sm" onClick={() => {
                                             if ('hero' == param.gubun) {
                                                 navigate('/detail/' + data.id);
