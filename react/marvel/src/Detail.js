@@ -9,6 +9,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import { useSelector } from "react-redux"
+import { mavelAddress, serverAddress } from './Const';
 
 function Detail() {
   let param = useParams();
@@ -56,7 +57,7 @@ function Detail() {
 
     axios({
       method: "GET",
-      url: "https://gateway.marvel.com:443/v1/public/characters/" + param.id,
+      url: mavelAddress + "characters/" + param.id,
       params: paramObj,
     })
       .then(data => {
@@ -72,7 +73,7 @@ function Detail() {
 
     axios({
       method: "POST",
-      url: "http://115.85.180.140:3000/read/hero?id=" + param.id
+      url: serverAddress + "read/hero?id=" + param.id
     }).then(datas => {
 
     }).catch(res => {
@@ -179,6 +180,7 @@ function Detail() {
             <Accordion.Body>
               <ListGroup horizontal style={isOk3 == true ? { overflowX: "auto", whiteSpace: "nowrap" } : { marginLeft: "50%" }}>
                 {isOk3 == false ? <SpinnerDom /> : story.length > 0 ? story.map((data, index) => {
+                  console.log(data.data.data.results[0].thumbnail)
                   return (
                     <div key={index} style={style}>
                       <div className="flip-card">

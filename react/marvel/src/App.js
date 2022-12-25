@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
@@ -33,17 +33,18 @@ function App() {
               }}>series</Nav.Link>
             </Nav>
           </Navbar.Collapse>
+          <Form className="d-flex" onChange={(e) => {
+            setSearch(e.target.value);
+          }}>
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+            />
+          </Form>
         </Container>
-        <Form className="d-flex" onChange={(e) => {
-          setSearch(e.target.value);
-        }}>
-          <Form.Control
-            type="search"
-            placeholder="Search"
-            className="me-2"
-            aria-label="Search"
-          />
-        </Form>
+
       </Navbar>
       <Routes>
         <Route path='/' element={<ListData data={search} />} />
