@@ -1,0 +1,45 @@
+#업무관련 URL
+
+
+https://dev-m.shinhan.com/rib/mnew/index.jsp?cr=250LO0111100 (경기보증재단개발 신청)
+https://dev-m.shinhan.com/rib/mnew/index.jsp?cr=250LO0111200 (경기보증재단개발 약정)
+
+
+https://m.shinhan.com/rib/mnew/index.jsp?cr=250LO0111100 (경기보증재단운영 신청)
+https://m.shinhan.com/rib/mnew/index.jsp?cr=250LO0111200 (경기보증재단운영 약정)
+
+
+https://bank.shinhan.com/index.jsp#020304100000 (군인공제회 회원대여 대출신청)
+https://bank.shinhan.com/index.jsp#020304150000 (군인공제회 목돈수탁 대출신청)
+
+
+https://register.shinhan.com/bank/ (온라인등기 은행서명)
+https://register.shinhan.com/lawfirm (온라인등기 법무사)
+https://register.shinhan.com/ (온라인등기 고객서명)
+
+
+https://ebond.shinhan.com/ (국민주택채권)
+
+https://www.yeskey.or.kr/testcert/ (인증서 개발발급)
+
+
+
+##host정보###
+
+106.241.47.192      tstebd.shinhan.com       
+106.241.47.176		ebddev2.shinhan.com
+106.241.47.175		devors.shinhan.com
+106.241.47.191		tstors.shinhan.com
+
+
+#NEXT 
+106.241.47.217   devrib3.shinhan.com
+106.241.47.219   dev-m.shinhan.com
+#106.241.47.220   devhpe3.shinhan.com
+#106.241.47.16   devred.shinhan.com
+
+
+#106.241.47.18 tstrib3.shinhan.com
+#106.241.47.19 tst-m.shinhan.com
+#106.241.47.24 tsthpe3.shinhan.com
+#106.241.47.94 tstped.shinhan.com
