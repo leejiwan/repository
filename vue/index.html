@@ -3,17 +3,39 @@
     <head>
         <meta charset="utf-8">
         <title>vue test</title>
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     </head>
     <body>
-        <div id="first">{{message}}</div>
+        <div id="app">
+            <h2>{{message}}</h2>
+            <h2 v-text="message"></h2>
+            <h2 v-html="message"></h2>
+            <h2>{{array1[1]}}</h2>
+        </div>
         <script>
+            //Vue 인스턴스 생성성
+            /*
+              el
+              data
+              method : 함수선언
+              computed : 어떤 데이터를 사용해서 계산?
+              watch : 어느데이터를 감시
+            */
             new Vue({
-                el:'#first',
+                el:'#app',
                 data:{
-                    message : 'test'
+                    message : 'test',
+                    array1 : [1,2,3]
                 }
             })
         </script>
     </body>
 </html>
+
+
+<!--
+설치 익스텐션
+- view-in-browser
+- open in browser
+- Vetur
+-->
