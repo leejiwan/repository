@@ -1,0 +1,27 @@
+박영웅 강사님
+
+https://curse-battery-d1c.notion.site/25-10-React-Deep-Dive-291c672eb95e80319dabf94b2022237f
+
+##설치파일
+1.node.js
+2.vscode
+3.git
+
+##vscode extend
+auto Rename Tag
+ESLint
+prettier
+es6-string-html
+
+터미널에서 명령어 실행
+안되면 cmd로 변경해서 명령어 실행
+ - npx degit ParkYoungWoong/vite-template--react-ts .
+ - npm install
+
+
+Promise 클래스 이해하기
+
+
+node src/test.js
+
+/** + tab 키 주석 추가 됨
