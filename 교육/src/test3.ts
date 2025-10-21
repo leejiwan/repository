@@ -9,5 +9,5 @@ type world = { a: number } & { b: number }
 const w: world = { a: 1, b: 1 }
 console.log(w)
 
-const el = document.querySelector('div')
-el?.innerHTML = 'hello'
+const el = document.querySelector('div')!
+el.innerHTML = 'hello'

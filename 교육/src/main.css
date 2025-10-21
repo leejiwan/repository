@@ -1,1 +1,5 @@
 @import 'tailwindcss';
+
+header a.active {
+  color: red;
+}
