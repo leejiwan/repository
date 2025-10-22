@@ -1,4 +1,3 @@
-import { lazy } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router' //히스토리 기반으로 페이지 이동
 //import Home from './pages/Home'
 //import About from './pages/About'
