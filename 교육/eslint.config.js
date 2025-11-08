@@ -11,7 +11,8 @@ export default tseslint.config(
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
-      eslintPluginPrettierRecommended
+      eslintPluginPrettierRecommended,
+      'plugin:@tanstack/eslint-plugin-query/recommended'
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {

@@ -1,49 +1,34 @@
-import { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
-
-interface Movie {
-  Title: string
-  Year: string
-  imdbID: string
-  Type: string
-  Poster: string
-}
+import { useOptimistic, useState, startTransition } from 'react'
 
 export default function App() {
+  // 원본 상태 정의
   const [count, setCount] = useState(0)
-  const [movies, setMovie] = useState<Movie[]>([])
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    //비동기 함수X async X
-    fetchMovies()
-    inputRef.current?.focus() //null이나 undefiend면 다음 체인으로 넘어가지 않는다
-  }, [])
-
-  async function fetchMovies() {
-    const { data } = await axios.get(
-      'https://omdbapi.com?apikey=7035c60c&s=frozen'
-    )
-    const movies = data.Search
-    console.log(movies)
-    setMovie(movies)
-    setCount(movies.length)
+  // 낙관적 상태 정의
+  const initialValue = count
+  const updateFn = (_state: number, newCount: number) => newCount
+  const [optimisticCount, addOptimisticCount] = useOptimistic(
+    initialValue,
+    updateFn
+  )
+  // 상태 업데이트 함수
+  async function increase(isSuccess: boolean) {
+    startTransition(async () => {
+      const newCount = optimisticCount + 1
+      addOptimisticCount(newCount) // 즉시 UI 업데이트
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      if (isSuccess) {
+        setCount(newCount)
+      } else {
+        addOptimisticCount(count)
+      }
+    })
   }
 
   return (
     <>
-      <input
-        ref={inputRef}
-        type="text"
-      />
-      <h1 className="text-4xl font-bold">App.tsx</h1>
-      <h2>{count}</h2>
-      {movies.map(movie => (
-        <div key={movie.imdbID}>
-          <div>{movie.Title}</div>
-          <img src={movie.Poster}></img>
-        </div>
-      ))}
+      <h2>Optimistic Count: {optimisticCount}</h2>
+      <button onClick={() => increase(true)}>+1 (성공)</button>
+      <button onClick={() => increase(false)}>+1 (실패)</button>
     </>
   )
 }
