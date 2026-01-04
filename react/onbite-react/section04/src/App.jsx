@@ -1,5 +1,6 @@
 import './App.css'
 import { useState } from 'react'
+import Register from './component/Register'
 
 /*
  구조분해할당 매개변수를 {light, ...} 이런식으로
@@ -25,6 +26,7 @@ function App() {
   */
   return (
     <>
+    <Register></Register>
     <div>
       <Bulb ligth = {light}></Bulb>
       <button onClick={()=>{
