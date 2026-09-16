@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>My Tasks - 스마트 Todo 대시보드</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <main class="todo-app-container">
+      <!-- 1. 헤더 영역 (타이틀, 날짜, 다크모드 스위치) -->
+      <header class="todo-header">
+        <div class="header-top">
+          <div class="title-group">
+            <h1 class="app-title">My Tasks</h1>
+            <span id="current-date" class="current-date">2026. 09. 16 (수)</span>
+          </div>
+          <!-- 다크모드 토글 스위치 -->
+          <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="theme-toggle" title="다크/라이트 모드 전환">
+              <input type="checkbox" id="theme-toggle">
+              <span class="slider round">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </header>
+
+      <!-- 2. 진행률 대시보드 섹션 -->
+      <section class="dashboard-section" aria-label="진행률 대시보드">
+        <div class="dashboard-header">
+          <h2 class="section-title">진행률 대시보드</h2>
+          <div class="dashboard-badges">
+            <span id="today-count-badge" class="badge badge-today">오늘 추가: 0개</span>
+            <span id="remaining-badge" class="badge badge-remaining">미완료: 0개</span>
+          </div>
+        </div>
+
+        <!-- 전체 진행률 바 -->
+        <div class="main-progress-container">
+          <div class="progress-info">
+            <span class="progress-label">전체 달성률</span>
+            <span id="progress-text" class="progress-text">0/0 완료 (0%)</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- 카테고리별 미니 진행률 카드 그리드 -->
+        <div class="category-stats-grid">
+          <div class="cat-stat-card work">
+            <div class="cat-stat-header">
+              <span class="cat-dot dot-work"></span>
+              <span class="cat-name">업무</span>
+              <span id="stat-work-text" class="cat-count">0/0</span>
+            </div>
+            <div class="mini-bar-bg">
+              <div id="bar-work-fill" class="mini-bar-fill fill-work" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div class="cat-stat-card personal">
+            <div class="cat-stat-header">
+              <span class="cat-dot dot-personal"></span>
+              <span class="cat-name">개인</span>
+              <span id="stat-personal-text" class="cat-count">0/0</span>
+            </div>
+            <div class="mini-bar-bg">
+              <div id="bar-personal-fill" class="mini-bar-fill fill-personal" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div class="cat-stat-card study">
+            <div class="cat-stat-header">
+              <span class="cat-dot dot-study"></span>
+              <span class="cat-name">공부</span>
+              <span id="stat-study-text" class="cat-count">0/0</span>
+            </div>
+            <div class="mini-bar-bg">
+              <div id="bar-study-fill" class="mini-bar-fill fill-study" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 유틸리티 툴바 (검색, 정렬, 백업/복구, 완료삭제) -->
+      <section class="toolbar-section">
+        <div class="search-sort-bar">
+          <div class="search-input-wrapper">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              id="search-input" 
+              class="search-input" 
+              placeholder="할 일 실시간 검색..." 
+              autocomplete="off"
+            >
+          </div>
+          <div class="sort-wrapper">
+            <select id="sort-select" class="sort-select" title="정렬 기준">
+              <option value="created-desc">최신순</option>
+              <option value="created-asc">오래된순</option>
+              <option value="category">카테고리순</option>
+              <option value="status">미완료 우선</option>
+              <option value="manual">사용자 지정 (드래그)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions-bar">
+          <div class="data-actions">
+            <button type="button" id="export-btn" class="util-btn" title="JSON 백업 다운로드">
+              📤 내보내기
+            </button>
+            <button type="button" id="import-btn" class="util-btn" title="JSON 백업 파일 불러오기">
+              📥 가져오기
+            </button>
+            <input type="file" id="import-file-input" accept=".json" style="display: none;">
+          </div>
+          <button type="button" id="clear-completed-btn" class="util-btn danger-btn" title="완료된 항목 일괄 삭제">
+            🗑️ 완료 항목 정리
+          </button>
+        </div>
+      </section>
+
+      <!-- 4. 카테고리 필터 탭 -->
+      <nav class="filter-nav" aria-label="할 일 카테고리 필터">
+        <button type="button" class="filter-btn active" data-filter="all" title="전체 보기 (Alt+1)">
+          전체 <span id="count-all" class="filter-count">0</span>
+        </button>
+        <button type="button" class="filter-btn" data-filter="work" title="업무 (Alt+2)">
+          <span class="cat-dot dot-work"></span> 업무 <span id="count-work" class="filter-count">0</span>
+        </button>
+        <button type="button" class="filter-btn" data-filter="personal" title="개인 (Alt+3)">
+          <span class="cat-dot dot-personal"></span> 개인 <span id="count-personal" class="filter-count">0</span>
+        </button>
+        <button type="button" class="filter-btn" data-filter="study" title="공부 (Alt+4)">
+          <span class="cat-dot dot-study"></span> 공부 <span id="count-study" class="filter-count">0</span>
+        </button>
+      </nav>
+
+      <!-- 5. 할 일 입력 폼 (카테고리 선택 + 입력창 + 추가 버튼) -->
+      <section class="todo-input-section">
+        <form id="todo-form" class="todo-form">
+          <div class="input-controls">
+            <select id="todo-category" class="category-select" title="카테고리 선택">
+              <option value="work">💼 업무</option>
+              <option value="personal" selected>🌱 개인</option>
+              <option value="study">📚 공부</option>
+            </select>
+            <input 
+              type="text" 
+              id="todo-input" 
+              class="todo-input" 
+              placeholder="새로운 할 일을 입력하세요... (단축키 Alt+N)" 
+              autocomplete="off"
+              maxlength="100"
+              required
+            >
+            <button type="submit" id="add-btn" class="add-btn">추가</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 6. 할 일 목록 리스트 (드래그 앤 드롭 및 인라인 수정 지원) -->
+      <section class="todo-list-section">
+        <ul id="todo-list" class="todo-list" aria-label="할 일 목록">
+          <!-- 동적 렌더링 -->
+        </ul>
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon">📝</div>
+          <p id="empty-message">할 일이 없습니다. 추가해보세요!</p>
+        </div>
+      </section>
+
+      <!-- 하단 단축키 안내 풋터 -->
+      <footer class="app-footer">
+        <p class="shortcut-hint">
+          ⌨️ 단축키: <kbd>Alt</kbd>+<kbd>N</kbd> 입력창 | <kbd>Alt</kbd>+<kbd>1~4</kbd> 필터 전환 | 항목 더블클릭 수정 | 마우스 드래그로 순서 변경
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
